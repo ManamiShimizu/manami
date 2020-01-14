@@ -101,7 +101,6 @@ if (!empty($_POST["send_edit"])){//編集ボタンが押された場合
 
 <html>
     <font size="5">掲示板</font><br>
-    <font size="2">今食べたいものを教えてください！</font><br>
 	<hr>
 
 	<form method = "post" action = "mission_5-1.php">
