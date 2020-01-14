@@ -7,29 +7,29 @@
 	$pdo = new PDO($dsn,$user,$password,array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
 
 //データベース内にテーブルを作成
-	$sql = "CREATE TABLE IF NOT EXISTS manamidb"//IF NOT EXISTSで警告防止
+	$sql = "CREATE TABLE IF NOT EXISTS manamidb"
 	." ("
-	. "id INT AUTO_INCREMENT PRIMARY KEY," //投稿番号
-	. "name char(30)," //名前
-	. "comment char(30)," //コメント
-	. "date char(30)," //投稿日時
-	. "pass char(30)" //パスワード
+	. "id INT AUTO_INCREMENT PRIMARY KEY,"//投稿番号
+	. "name char(30),"//名前
+	. "comment char(30),"//コメント
+	. "date char(30),"//投稿日時
+	. "pass char(30)"//パスワード
 	.");";
 	$stmt = $pdo->query($sql);
 
 if (!empty ($_POST["send"])){//送信ボタンが押された場合
 	if (!empty ($_POST["name"] and $_POST["comment"] and $_POST["password1"] and $_POST["hidden"])){ //名前、コメント、パスワード1、hiddenに値が入っている場合
 	
-		//以下updeteで編集開始
+		//updateで編集開始
 		
-		$id = $_POST["hidden"]; //投稿番号
-		$name = $_POST["name"]; //名前
-		$comment = $_POST["comment"]; //コメント
-		$date = date ("Y年m月d日 H:i:s");  //日時
-		$pass = $_POST["password1"]; //パスワード
+		$id = $_POST["hidden"];//投稿番号
+		$name = $_POST["name"];//名前
+		$comment = $_POST["comment"];//コメント
+		$date = date ("Y年m月d日 H:i:s");//日時
+		$pass = $_POST["password1"];//パスワード
 		
 		$sql = 'update manamidb set name=:name,comment=:comment,date=:date,pass=:pass where id=:id'; 
-		$stmt = $pdo->prepare($sql); //sql準備
+		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':name', $name, PDO::PARAM_STR);
 		$stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
 		$stmt->bindParam(':date', $date, PDO::PARAM_STR);
@@ -39,7 +39,7 @@ if (!empty ($_POST["send"])){//送信ボタンが押された場合
 
 		//編集終了
 
-	}elseif (!empty ($_POST["name"] and $_POST["comment"] and $_POST["password1"])){//名前、コメント、パスワード1に値が入っている場合
+	}elseif (!empty ($_POST["name"] and $_POST["comment"] and $_POST["password1"])){//hiddenは空で、名前、コメント、パスワード1に値が入っている場合
 	
 		//insertで新規投稿開始
 
@@ -68,7 +68,7 @@ if (!empty($_POST["send_delete"])){//削除ボタンが押された場合
 
 		foreach ($result as $row){//ループ開始
 		
-			if ($row['pass'] == $_POST["password2"]){//パスワードが一致していた場合
+			if ($row['pass'] == $_POST["password2"]){//パスワードが一致していた場合削除
 
 				$id = $_POST["delete"];
 				$sql = 'delete from manamidb where id=:id';
@@ -81,7 +81,7 @@ if (!empty($_POST["send_delete"])){//削除ボタンが押された場合
 }
 
 if (!empty($_POST["send_edit"])){//編集ボタンが押された場合
-	if (!empty($_POST["edit"] and $_POST["password3"])){	//編集対象番号とパスワード3が入力されている場合
+	if (!empty($_POST["edit"] and $_POST["password3"])){//編集対象番号とパスワード3が入力されている場合
 
 		//selectでデータを確認
 		$sql = 'SELECT * FROM manamidb';
@@ -89,7 +89,7 @@ if (!empty($_POST["send_edit"])){//編集ボタンが押された場合
 		$result = $stmt->fetchAll();
 
 		foreach ($result as $row){//ループ開始
-			if ($row['pass'] == $_POST["password3"] || $row['id'] == $_POST["edit"]){	//パスワードが一致し、投稿番号と編集対象番号が一致した場合
+			if ($row['pass'] == $_POST["password3"] || $row['id'] == $_POST["edit"]){//パスワード3が一致し、投稿番号と編集対象番号も一致した場合、名前＆コメントフォーム内に表示
 				$editname = $row['name'];//名前フォーム内表示用
 				$editcomment = $row['comment'];//コメントフォーム内表示用
 				$editnum = $_POST["edit"];
