@@ -18,7 +18,7 @@
 	$stmt = $pdo->query($sql);
 
 if (!empty ($_POST["send"])){//送信ボタンが押された場合
-	if (!empty ($_POST["name"] and $_POST["comment"] and $_POST["password1"] and $_POST["hidden"])){ //名前、コメント、パスワード1、hiddenに値が入っている場合
+	if (!empty ($_POST["name"] and $_POST["comment"] and $_POST["password1"] and $_POST["hidden"])){ //名前、コメント、パスワード1が入力されていて、hiddenに値が入っている場合
 	
 		//updateで編集開始
 		
@@ -39,7 +39,7 @@ if (!empty ($_POST["send"])){//送信ボタンが押された場合
 
 		//編集終了
 
-	}elseif (!empty ($_POST["name"] and $_POST["comment"] and $_POST["password1"])){//hiddenは空で、名前、コメント、パスワード1に値が入っている場合
+	}elseif (!empty ($_POST["name"] and $_POST["comment"] and $_POST["password1"])){//名前、コメント、パスワード1が入力されている場合
 	
 		//insertで新規投稿開始
 
@@ -59,7 +59,7 @@ if (!empty ($_POST["send"])){//送信ボタンが押された場合
 }
 
 if (!empty($_POST["send_delete"])){//削除ボタンが押された場合
-	if (!empty($_POST["delete"] and $_POST["password2"])){//削除対象番号とパスワード2に値が入っている場合
+	if (!empty($_POST["delete"] and $_POST["password2"])){//削除対象番号とパスワード2が入力されている場合
 	
 		//selectでデータを確認
 		$sql = 'SELECT * FROM manamidb';
